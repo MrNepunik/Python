@@ -1,46 +1,38 @@
-def calculate_bill_with_vat():
-    print("Welcome to the Billing System with 13% VAT")
-    print("-" * 50)
+print("Welcome to the Billing System with 13% VAT")
+print("-" * 50)
 
-    # Step 1: Ask how many types of items
-    try:
-        item_count = int(input("Enter the number of different item types: "))
-    except ValueError:
-        print("Please enter a valid number.")
-        return
+item_count = int(input("Enter the number of different item types: "))
 
-    items = []
-    total_without_vat = 0
+items = []
+total_without_vat = 0
 
-    # Step 2: Loop to take item name, quantity, and cost per piece
-    for i in range(item_count):
-        print(f"\nItem {i+1}")
-        item_name = input("Enter item name (e.g., Biscuit, Oats): ").strip()
-        try:
-            quantity = int(input(f"Enter quantity of {item_name}: "))
-            price_per_unit = float(input(f"Enter price per 1 piece of {item_name}: "))
-        except ValueError:
-            print("Invalid number! Skipping this item.")
-            continue
+for i in range(item_count):
+    print("\nItem", i + 1)
 
-        amount = quantity * price_per_unit
-        total_without_vat += amount
-        items.append((item_name, quantity, price_per_unit, amount))
+    item_name = input("Enter item name (e.g., Biscuit, Oats): ")
+    quantity = int(input("Enter quantity of " + item_name + ": "))
+    price_per_unit = float(input("Enter price per 1 piece of " + item_name + ": "))
 
-    # Step 3: Calculate 13% VAT and final total
-    vat = total_without_vat * 0.13
-    total_with_vat = total_without_vat + vat
+    amount = quantity * price_per_unit
+    total_without_vat = total_without_vat + amount
 
-    # Step 4: Display final bill
-    print("\n--- Final Bill ---")
-    for idx, (name, qty, price, amt) in enumerate(items, start=1):
-        print(f"{idx}. {name}: {qty} pcs x Rs.{price:.2f} = Rs.{amt:.2f}")
+    items.append([item_name, quantity, price_per_unit, amount])
 
-    print("-" * 50)
-    print(f"Subtotal (without VAT): Rs.{total_without_vat:.2f}")
-    print(f"13% VAT: Rs.{vat:.2f}")
-    print(f"Total Amount to Pay: Rs.{total_with_vat:.2f}")
-    print("Thank you for shopping!")
+vat = total_without_vat * 0.13
+total_with_vat = total_without_vat + vat
 
-# Run the program
-calculate_bill_with_vat()
+print("\n--- Final Bill ---")
+
+for i in range(len(items)):
+    name = items[i][0]
+    quantity = items[i][1]
+    price = items[i][2]
+    amount = items[i][3]
+
+    print(str(i + 1) + ". " + name + ": " + str(quantity) + " pcs x Rs." + str(price) + " = Rs." + str(amount))
+
+print("-" * 50)
+print("Subtotal (without VAT): Rs." + str(total_without_vat))
+print("13% VAT: Rs." + str(vat))
+print("Total Amount to Pay: Rs." + str(total_with_vat))
+print("Thank you for shopping!")
