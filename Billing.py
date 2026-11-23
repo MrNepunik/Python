@@ -1,38 +1,56 @@
 print("Welcome to the Billing System with 13% VAT")
 print("-" * 50)
 
-item_count = int(input("Enter the number of different item types: "))
+while True:
+    try:
+        item_count = int(input("How many different items? (example: 2): "))
+        if item_count > 0:
+            break
+        print("Please enter a number greater than 0.")
+    except ValueError:
+        print("Enter a number like 1 or 2, not an item name.")
 
 items = []
-total_without_vat = 0
+subtotal = 0
 
 for i in range(item_count):
     print("\nItem", i + 1)
 
-    item_name = input("Enter item name (e.g., Biscuit, Oats): ")
-    quantity = int(input("Enter quantity of " + item_name + ": "))
-    price_per_unit = float(input("Enter price per 1 piece of " + item_name + ": "))
+    name = input("Enter item name: ")
 
-    amount = quantity * price_per_unit
-    total_without_vat = total_without_vat + amount
+    while True:
+        try:
+            quantity = int(input("Enter quantity: "))
+            if quantity > 0:
+                break
+            print("Quantity must be greater than 0.")
+        except ValueError:
+            print("Enter a whole number like 2 or 3.")
 
-    items.append([item_name, quantity, price_per_unit, amount])
+    while True:
+        try:
+            price = float(input("Enter price per piece in Rs: "))
+            if price >= 0:
+                break
+            print("Price cannot be negative.")
+        except ValueError:
+            print("Enter only the price, like 25 or 25.50.")
 
-vat = total_without_vat * 0.13
-total_with_vat = total_without_vat + vat
+    amount = quantity * price
+    subtotal = subtotal + amount
+    items.append([name, quantity, price, amount])
+
+vat = subtotal * 0.13
+total = subtotal + vat
 
 print("\n--- Final Bill ---")
 
 for i in range(len(items)):
-    name = items[i][0]
-    quantity = items[i][1]
-    price = items[i][2]
-    amount = items[i][3]
-
-    print(str(i + 1) + ". " + name + ": " + str(quantity) + " pcs x Rs." + str(price) + " = Rs." + str(amount))
+    name, quantity, price, amount = items[i]
+    print(f"{i + 1}. {name}: {quantity} pcs x Rs.{price:.2f} = Rs.{amount:.2f}")
 
 print("-" * 50)
-print("Subtotal (without VAT): Rs." + str(total_without_vat))
-print("13% VAT: Rs." + str(vat))
-print("Total Amount to Pay: Rs." + str(total_with_vat))
+print(f"Subtotal: Rs.{subtotal:.2f}")
+print(f"13% VAT: Rs.{vat:.2f}")
+print(f"Total Amount to Pay: Rs.{total:.2f}")
 print("Thank you for shopping!")
