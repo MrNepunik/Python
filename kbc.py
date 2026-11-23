@@ -1,5 +1,5 @@
-def kbc():
-    print("Welcome to KBC")
+def quiz():
+    print("Welcome to Quiz")
     print("You will be asked 10 questions")
     print("You can exit at any time by pressing 0")
     print("You will be given 4 options for each question\n")
@@ -39,7 +39,12 @@ def kbc():
 
     # Q4
     print("Q4: Which is the National Song of Nepal?")
-    options = ["1. Rato ra Chandra Surya", "2. Sayau Thunga Ful ka hami", "3. Shereeman Gambir", "4. Yo Nepali Shir Uchali"]
+    options = [
+        "1. Rato ra Chandra Surya",
+        "2. Sayau Thunga Ful ka hami",
+        "3. Shereeman Gambir",
+        "4. Yo Nepali Shir Uchali"
+    ]
     print(options)
     ans = int(input("Choose the correct answer [To exit press 0]: "))
     if ans == 1:
@@ -81,7 +86,12 @@ def kbc():
 
     # Q7
     print("Q7: Who was the Prime Minister of Nepal during World War 2?")
-    options = ["1. Mohan Shumsher", "2. Chandra Shumsher", "3. Juddha Shumsher", "4. Padma Shumsher"]
+    options = [
+        "1. Mohan Shumsher",
+        "2. Chandra Shumsher",
+        "3. Juddha Shumsher",
+        "4. Padma Shumsher"
+    ]
     print(options)
     ans = int(input("Choose the correct answer [To exit press 0]: "))
     if ans == 2:
@@ -127,13 +137,14 @@ def kbc():
     print(options)
     ans = int(input("Choose the correct answer [To exit press 0]: "))
     if ans == 2:
-        print("Correct! 🎉 You have won the grand prize of Rs.2,000,000!")
+        print("Correct! You have won the grand prize of Rs.2,000,000!")
     elif ans == 0:
         print("You have won Rs.400,000\nThanks for playing.")
     else:
         print("Incorrect. You have won Rs.200,000\nThanks for playing.")
 
-# Start the game
-kbc()
-# End of the game 
-# Thank you for palying KBC 
+
+# Start the quiz
+quiz()
+
+# Thank you for playing Quiz
