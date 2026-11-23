@@ -1,4 +1,3 @@
-# GPA system as list of tuples (min_mark, max_mark, grade, GP)
 gpa_system = [
     (90, 100, "A+", 4.0),
     (80, 89, "A", 3.6),
@@ -9,89 +8,118 @@ gpa_system = [
     (0, 39, "F", 0.0)
 ]
 
-# Class input
-a = int(input("Enter your class (9-12): "))
+print("Welcome to the GPA Calculator")
 
-if a == 9 or a == 10:
-    print("Enter your marks")
-    g = int(input("Nepali: "))
-    h = int(input("English: "))
-    i = int(input("Science: "))
-    j = int(input("C.Maths: "))
-    k = int(input("Social Studies: "))
-    l = int(input("Optional I (O.Maths/ Economics): "))
-    m = int(input("Optional II (Account/ Computer): "))
+while True:
+    try:
+        class_number = int(input("Enter your class (9-12): "))
+        if class_number in [9, 10, 11, 12]:
+            break
+        print("Please enter a class from 9 to 12.")
+    except ValueError:
+        print("Please enter a number like 9 or 11.")
 
-    marks = [g, h, i, j, k, l, m]
+if class_number == 9 or class_number == 10:
+    subjects = [
+        "Nepali",
+        "English",
+        "Science",
+        "C.Maths",
+        "Social Studies",
+        "Optional I (O.Maths/Economics)",
+        "Optional II (Account/Computer)"
+    ]
 
-elif a >= 11:
-    b = input("Enter your faculty/stream (science or management): ").lower()
+else:
+    while True:
+        stream = input("Enter your stream (science/management): ").strip().lower()
+        if stream in ["science", "management"]:
+            break
+        print("Please enter science or management.")
 
-    if b == "science":
-        c = input("Choose subject (biology or computer): ").lower()
-        if c == "biology":
-            print("Enter your marks")
-            n = int(input("Nepali: "))
-            o = int(input("English: "))
-            p = int(input("Physics: "))
-            q = int(input("Chemistry: "))
-            r = int(input("Biology: "))
-            s = int(input("Maths: "))
-            marks = [n, o, p, q, r, s]
+    if stream == "science":
+        while True:
+            choice = input("Choose biology or computer: ").strip().lower()
+            if choice in ["biology", "computer"]:
+                break
+            print("Please enter biology or computer.")
+
+        subjects = [
+            "Nepali",
+            "English",
+            "Physics",
+            "Chemistry",
+            choice.capitalize(),
+            "Maths"
+        ]
+
+    else:
+        while True:
+            choice = input("Choose HM, CS or BS: ").strip().lower()
+            if choice in ["hm", "cs", "bs"]:
+                break
+            print("Please enter HM, CS or BS.")
+
+        if choice == "hm":
+            subjects = [
+                "Nepali",
+                "English",
+                "HM",
+                "Social",
+                "Account",
+                "Economics"
+            ]
+        elif choice == "cs":
+            subjects = [
+                "Nepali",
+                "English",
+                "Maths/Social",
+                "Account",
+                "Economics",
+                "CS"
+            ]
         else:
-            print("Enter your marks")
-            t = int(input("Nepali: "))
-            u = int(input("English: "))
-            v = int(input("Physics: "))
-            w = int(input("Chemistry: "))
-            x = int(input("Computer: "))
-            y = int(input("Maths: "))
-            marks = [t, u, v, w, x, y]
+            subjects = [
+                "Nepali",
+                "English",
+                "Social",
+                "Account",
+                "Economics",
+                "BS"
+            ]
 
-    elif b == "management":
-        d = input("Choose HM or CS or BS: ").lower()
-        if d == "hm":
-            print("Enter your marks")
-            z = int(input("Nepali: "))
-            A = int(input("English: "))
-            B = int(input("HM: "))
-            C = int(input("Social: "))
-            D = int(input("Account: "))
-            E = int(input("Economics: "))
-            marks = [z, A, B, C, D, E]
-        elif d == "cs":
-            print("Enter your marks")
-            F = int(input("Nepali: "))
-            G = int(input("English: "))
-            K = int(input("Maths/Social: "))
-            H = int(input("Account: "))
-            M = int(input("Economics: "))
-            N = int(input("CS: "))
-            marks = [F, G, K, H, M, N]
-        else:
-            print("Enter your marks")
-            O = int(input("Nepali: "))
-            P = int(input("English: "))
-            Q = int(input("Social: "))
-            R = int(input("Account: "))
-            S = int(input("Economics: "))
-            T = int(input("BS: "))
-            marks = [O, P, Q, R, S, T]
+marks = []
 
-# Common code to calculate GPA and percentage
+print("\nEnter your marks out of 100")
+
+for subject in subjects:
+    while True:
+        try:
+            mark = int(input(subject + ": "))
+            if 0 <= mark <= 100:
+                marks.append(mark)
+                break
+            print("Marks must be between 0 and 100.")
+        except ValueError:
+            print("Please enter a whole number like 75.")
+
 total_gp = 0
-print("\nSubject Marks -> GPA & Grade")
-for mark in marks:
+
+print("\n--- Result ---")
+
+for i in range(len(subjects)):
+    mark = marks[i]
+
     for min_mark, max_mark, grade, gp in gpa_system:
         if min_mark <= mark <= max_mark:
-            print(f"{mark} -> {gp} ({grade})")
-            total_gp += gp
-            break  # once matched, stop checking other ranges
+            print(f"{subjects[i]}: {mark} -> {grade} ({gp:.1f})")
+            total_gp = total_gp + gp
+            break
 
-# Calculate overall GPA
-overall_gpa = total_gp / len(marks)
-print(f"\nOverall GPA: {overall_gpa:.2f}")
+overall_gpa = total_gp / len(subjects)
+percentage = sum(marks) / len(subjects)
 
-# Calculate percentage
-percentage = sum(marks) / len(marks)
+print("-" * 40)
+print(f"Total Marks: {sum(marks)} / {len(subjects) * 100}")
+print(f"Overall GPA: {overall_gpa:.2f}")
 print(f"Percentage: {percentage:.2f}%")
